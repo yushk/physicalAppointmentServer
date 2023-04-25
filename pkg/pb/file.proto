@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/yushk/sport_backend/manager/pb;pb";
+
+message File {
+    string name = 1;
+    string path = 2;
+    bytes file = 3;
+}
+
+service FileManager {
+    rpc UploadFile(stream UploadFileRequest) returns (UploadFileReply) {}
+    rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileReply) {}
+    rpc GetClubFileZip(GetClubFileZipRequest) returns (GetClubFileZipReply) {}
+    rpc DeleteFile(DeleteFileRequest) returns (DeleteFileReply) {}
+}
+
+message UploadFileRequest {
+    // Name 文件名
+    string name = 1;
+    // Path 文件路径
+    string path = 2;
+    // File 二进制文件流
+    bytes file = 3;
+}
+
+message UploadFileReply {
+    string id = 1;
+}
+
+message DownloadFileRequest {
+    string id = 1;
+}
+
+message DownloadFileReply {
+    bytes file = 1;
+}
+
+message GetClubFileZipRequest{
+    string club = 1;
+}
+
+message GetClubFileZipReply{
+    repeated File files = 1;
+}
+
+message DeleteFileRequest{
+    string id = 1;
+}
+
+message DeleteFileReply{
+}

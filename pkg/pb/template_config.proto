@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/yushk/sport_backend/manager/pb;pb";
+
+message Evaluate {
+    string id = 1;
+    string name = 2;
+    string excellent = 3;
+    string good = 4;
+    string pass = 5;
+    string flunk = 6;
+}
+
+message QuestionOptions{
+    string score=1;
+    string desc=2;
+    string id=3;
+}
+
+message SportItem {
+    string id = 1;
+    string label = 2;
+    string first = 3;
+    string second = 4;
+    string upload_file = 5;
+    string file_type = 6;
+    string approver = 7;
+    string file_name = 8;
+    int64 create_time = 9;
+    int64 update_time = 10;
+    repeated QuestionOptions question_options = 11;
+    string version =12;
+}
+
+service SportItemManager {
+    rpc CreateSportItem(CreateSportItemRequest) returns (SportItem) {}
+    rpc GetSportItem(GetSportItemRequest) returns (SportItem) {}
+    rpc UpdateSportItem(UpdateSportItemRequest) returns (SportItem) {}
+    rpc DeleteSportItem(DeleteSportItemRequest) returns (SportItem) {}
+    rpc GetSportItems(GetSportItemsRequest) returns (GetSportItemsReply) {}
+}
+
+message CreateSportItemRequest {
+    SportItem data = 1;
+}
+
+message GetSportItemRequest {
+    string id = 1;
+}
+
+message UpdateSportItemRequest {
+    string id = 1;
+    SportItem data = 2;
+}
+
+message DeleteSportItemRequest {
+    string id = 1;
+}
+
+message GetSportItemsRequest {
+    string query = 1;
+    int64 skip = 2;
+    int64 limit = 3;
+}
+
+message GetSportItemsReply {
+    int64 total_count = 1;
+    repeated SportItem items = 2;
+}
